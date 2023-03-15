@@ -199,4 +199,4 @@ str(new_categories)
 
 - are n-dimensional data structure with the same data type and are not
     used extensively by most r users 
-- not really im portant
+- not really important
