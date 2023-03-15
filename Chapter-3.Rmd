@@ -71,7 +71,6 @@ xn
 0.4588 0.4588 0.4588
 
 ```
-![](https://leanpub.com/site_images/regmods/galton4.png)
 
 ## Results
 
