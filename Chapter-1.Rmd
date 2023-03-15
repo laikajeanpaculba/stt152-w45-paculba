@@ -56,7 +56,6 @@ g <- ggplot(galton, aes(x = child)) + geom_histogram(fill = "salmon", colour = "
 g <- g + geom_vline(xintercept = mean(galton$child), size = 3)
 g
 ```
-![](https://leanpub.com/site_images/regmods/galton.png)
 
 ## Finding the middle via least squares:
 
@@ -80,8 +79,6 @@ $$\begin{aligned} \sum_{i = 1}^{n} (Y_i - \mu)^2 \end{aligned}$$
 ```
 ggplot(galton, aes(x = parent, y = child)) + geom_point()
 ```
-
-![](https://leanpub.com/site_images/regmods/galton2.png)
 
 - The over plotting is clearly hiding some data.
 
@@ -108,8 +105,6 @@ g
 }
 manipulate(myPlot(beta), beta = slider(0.6, 1.2, step = 0.02))
 ````
-
-![](https://leanpub.com/site_images/regmods/lsm.png)
 
 # Regression through the origin
 
@@ -144,6 +139,4 @@ Coefficients:
 I(parent - mean(parent))  
                    0.646
 ```
-![](https://leanpub.com/site_images/regmods/galton3.png) 
- 
 The results suggest that for every 1 inch increase in the parents’ height, we estimate a 0.646 inch increase in the child’s height
