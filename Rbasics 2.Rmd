@@ -5,7 +5,7 @@ date: "March 29, 2023"
 ouput: pdf_document
 ---
 
-List elements can be nay data type and any dimensions 
+List elements can be any data type and any dimensions 
 Each element can be given a name
 
 Arrays - are n-dimensional data structures 
