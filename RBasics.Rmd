@@ -8,6 +8,9 @@ editor_options:
     wrap: 72
 ---
 
+r is a programming language that was originally developed by and for statisticians, but in recent years its capabilities and the environments in which it is used have expanded greatly, with extensive use nowadays in academia and the public and private sectors.
+r receives input and output. not easy to use without an IDE 
+
 **\<-** operator to store an object
 
 **\#**-can be used to put a comment
