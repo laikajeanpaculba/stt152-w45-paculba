@@ -35,9 +35,9 @@ str(new_list)
 new_list$matrix
 ```
 
-Data frames most used data structure, named list of vectors of the same length with each vector as a column
+Data frames most used data structure, they are effectively named list of vectors of the same length with each vector as a column
 
-similar to database table, google sheet, excel
+similar in nature to a typical database table, google sheet, excel
 
 two vectors of different types but same length
 ```{r}
