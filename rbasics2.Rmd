@@ -273,3 +273,86 @@ df_report(sales_720)
 df_report(low_and_high_sales)
 #df_report(salespeople_local) (?)
 ```
+
+
+
+in this example, a simple function is written which generates a report on dataframe
+```{r}
+df_report <- function(df) {
+  paste(
+    "This dataframe contains", nrow(df),
+    "rows and", ncol(df),
+    "columns. There are", sum(is.na(df)),
+    "NA entries."
+  )
+}
+````
+
+INSTALLING PACKAGES
+
+before an external package
+
+INSTALL mass, TYPE
+
+```{r}
+install.packages("MASS")
+```
+needs internet acess
+
+CRAn - will send r 
+find the right version of MASS
+id MASS meeds other pacvkages to owrk it will also install other packages called dependencies
+
+if nadelete tanan packages in r you can use this:
+```{r}
+my_packages <- c("MASS, "DescTools", "dplyr")
+```
+can be used dependently(?)
+
+HELP function 
+```{r}
+help(package="MASS")
+```
+
+USING PACKAGES
+
+load the package, library command
+to have accesss on the functions
+```{r}
+library(MASS)
+```
+
+functions BELONG to packages
+messages will alert you
+r always defaults to the func most recently loaded
+namespacing your functions
+To namespace, use package 
+MASS::
+
+THE PIPE OPERATOR
+makes code more antural to read and write and reduces 
+comes inside many r packages particularly magrittr and dplyr
+ex. 
+1. subset salespeople to only the sales values of those with sales less than 500
+2. take the mean of those values
+```{r}
+sales <- subset(salespeople$sales, subset = salespeople$sales < 500)
+mean(subset(salespeople$sales, subset = salespeople$sales < 500))
+```
+
+```{r}
+library(magrittr)
+subset(salespeople$sales, subset = salespeople$sales < 500) %>% mean()
+```
+```{r}
+#based on pipe intax
+salespeople$sales %>% #start with all the data
+  subset(subset = salespeople$sales < 500) %>%
+  # get the subsetted data
+  mean() %>% # take the mean value
+  round() # round to the nearest integer
+#based on r intax
+round(mean(subset(salespeople$sales, subset = salespeople$sales < 500)))
+```
+  
+  pipe operator widely used in r
