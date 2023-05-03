@@ -1,0 +1,612 @@
+---
+title: "Basics of R"
+author: "Laika Jean Paculba"
+date: "March 15, 2023"
+output: pdf_document
+---
+
+R is a programming language that was originally developed by and for statisticians, but in recent years its capabilities and the environments in which it is used have expanded greatly, with extensive use nowadays in academia and the public and private sectors.
+r receives input and output. not easy to use without an IDE 
+
+**\<-** operator to store an object
+
+**\#**-can be used to put a comment
+
+
+```{r}
+my_sum <- 3 + 3 #storing the result
+my_sum + 3 
+```
+
+
+
+## INTEGERS
+
+-   can be signified by adding an **'L'** to the end
+```{r}
+my_integer \<- 1L
+my_double \<- 6.38
+```
+## typeof() function
+
+-   used to see the type of a single scalar value
+```{r}
+typeof(my_integer)
+typeof(my_double)
+```
+
+## NUMERIC DATA
+
+-   can be in integer form or double (decimal) form.
+
+```{r}
+    my_integer <- 1L
+    my_double <- 6.38
+    typeof(my_integer)
+    typeof(my_double)
+```
+
+```{r}
+    my_integer <- 9L
+    typeof(my_integer)
+    my_double <- 7.98
+    typeof(double)
+```
+
+## CHARACTER DATA
+
+-   text data surrounded by single or double quotes
+
+```{r}
+    my_character <- "This is text"
+    typeof(my_character)
+```
+
+## LOGICAL DATA
+
+-   takes the form TRUE or FALSE
+
+```{r}
+    my_logical <- TRUE
+    typeof(my_logical)  
+    my_logical <- TRUE
+    typeof(TRUE)
+```
+typeof(my_logical) => *verify if its indeed logical*
+
+
+# HOMOGENOUS DATA STRUCTURES
+
+## VECTORS
+
+-   one-dimensional structures containing data of the same type and are
+    notated by using c().
+
+ + **typeof()** - a function used to view the type of vector
+
+ + **str()** - a function used to display both the contents of the
+    vector and its type.
+    
+```{r}
+my_double_vector <- c(2.3, 6.8, 4.5, 65, 6)  
+str(my_double_vector) #verify
+type of(my_double_vector)
+```
+
+## CATEGORICAL DATA
+
+-   which takes only a finite number of possible values
+-   can be stored as a factor vector to make it easier to perform
+    grouping and manipulation.
+
+define a vector of the factor which is not
+```{r}
+    categories <- factor(c("A", "B", "V", "A", "C")) 
+    str(categories) # verify
+    categories <- factor(c("A","B","C","A","C"))
+```
+If needed factors can be given order
+
+```{r}
+#character vector
+    ranking <- c("Medium", "High", "Low") 
+    str(ranking)
+```
+
+
+```{r}
+# turn it into an ordered factor
+    ranking_factors <- ordered(  
+      ranking, levels = c("Medium", "High", "Low")
+    )
+    str(ranking_factors)
+```
+
+**contents and type of the vector which is ordered type:**
+```{r}
+    ((ranking <- c("Medium", "High", "Low"))
+    ranking_order <- order(ranking, levels(c("Medium", "High", "Low")))
+    ranking_order <- order(ranking, levels(c("Medium", "High", "Low")))
+    str(ranking_order)
+```
+
+length() function, the number of elements in a vector can be seen using this
+```{r}
+link(categories)
+```
+
+## COERCION
+- result of poor design 
+- one or more of the types are forced into a different type to ensure homogeneity
+
+**simple numeric sequence vectors:**
+- can be created using shorthand notation
+
+```{r}
+    (my_sequence <- 1:10) 
+    (my_sequence_2 <- seq(from=1, to=10)) #same above,but flexible than above
+    (seq_five <- seq(from=5, to=500, by=5))  #example
+```
+
+If you try to mix data types inside a vector, it will usually result in type coercion, where one or more of the types are forced into a different type to ensure homogeneity. Often this means the vector will become a character vector.
+
+```{r}
+# numeric sequence vector
+vec \<- 1:5 
+str(vec)
+```
+
+ 
+```{r}
+create a new vector containing vec and the character hello
+new_vec <- c(vec, "hello")   #creates a vector forom the precious vector
+# numeric values have been coerced into their character equivalents
+str(new_vec) # the new elements become a type elements 
+```
+
+```{r}
+vec[1]+ vec[2] # result is 3
+new_vec[1] + new_vec[2] 
+```
+
+- result to error 
+- keep in mind to know what
+is the type of data
+
+```{r}
+# attempt a mixed logical and numeric
+mix <- c(TRUE, 6) 
+# logical has been converted to binary numeric (TRUE = 1)
+str(mix) 
+```
+
+```{r}
+# try to add a numeric to our previous categories factor vector
+new_categories <- c(categories, 1)
+
+# categories have been coerced to background integer representations
+str(new_categories)
+```
+
+## MATRICES
+
+-   two dimensional data structures of the same type and are built from
+    a vector by defining the number of rows and columns.
+-   Data is read into the matrix down the columns, starting  left and moving right. Matrices are rarely used for non-numeric data types.
+-   you can convert a vector to matrix
+
+```{r}
+# create a 2x2 matrix with the first four integers
+(m <- matrix( c(1, 2, 3, 4), nrow = 2, ncol = 2 )) 
+(m <- matrix(c(1,2,3,4), nrow=2, ncol=3))
+(m <- matrix(c(1,2,3,4), nrow=3, ncol=3))
+```
+
+## ARRAYS
+
+- are n-dimensional data structure with the same data type and are not
+    used extensively by most R users 
+- not really important
+
+List elements can be any data type and any dimensions 
+Each element can be given a name
+
+# Heterogeneous structure 
+
+**List** - one- dimension data structures that can take data of any type
+     - is not one time only
+
+```{r echo=TRUE, warning=FALSE}
+my_list <- c(6, TRUE, "hello")
+str(my_list)
+my_list <- list(6, TRUE, "hello")
+str(my_list)
+```
+
+```{r}
+new_list <- list(
+  scalar = 6, 
+  vector = c("Hello", "Goodbye"), 
+  matrix = matrix(1:4, nrow = 2, ncol = 2)
+)
+
+str(new_list)
+```
+
+vector- homogeneous sa data structure nga type
+
+Data is read into the matrix down the columns, starting left and moving right.
+
+Named list elements can be accessed by using **$**
+
+```{r}
+new_list <- list(
+scalar = c("Hello", "Goodbye"),
+matrix = matrix(1:4, nrow=2, ncol=2)
+)
+str(new_list)
+new_list$matrix
+```
+
+**Data frames** 
+
+most used data structure in R, they are effectively a named list of vectors of the same length with each vector as a column
+
+similar in nature to a typical database table, google sheet, excel
+
+```{r}
+# two vectors of different types but same length
+names <- c("John", "Ayesha")
+ages <- c(31, 24)
+(df <- data.frame(names, ages)) #create dataframe
+str(df) #get types of columns
+dim(df) #get dimensions
+```
+
+
+Dataframe most commonly used data structure by data analyst in R, due to its similarity to data tables found in databases and spreadsheets. 
+
+to work with data in R, usually need to pull it in from an outside source into a dataframe
+
+```{r}
+R data sets
+```
+
+R facilitates numerous ways of importing, databases from simple .csv files
+
+The read.csv() function can accept a URL address of the file if it is online
+
+```{r}
+# url of data set 
+url <- "http://peopleanalytics-regression-book.org/data/salespeople.csv"
+
+# load the data set and store it as a dataframe called salespeople
+salespeople <- read.csv(url)
+View(salespeople)
+```
+
+read downloaded file
+
+read.csv("salespeople.csv")
+salespeople_local <- read.csv("salespeople.csv")
+
+
+we can view dimensions, and if it is too big to display, we can use the **head()** function to display just the first few rows
+
+```{r}
+dim(salespeople)
+# hundreds of rows, so view first few
+head(salespeople)
+```
+
+
+```{r}
+# view a specific view by using $ sign and use square brackets to view a specific entry
+salespeople$sales
+salespeople$sales[6]
+```
+
+use [row, column] index to get a specific entry in the dataframe
+```{r}
+salespeople[34,4]
+```
+
+```{r}
+salespeople[34,4] #access specific row and column
+salespeople[34,] #access the whole row
+salespeople[,4] #access the whole column
+```
+
+look at datatypes using **str()**
+```{r}
+str(salespeople)
+```
+
+see statistical summary of each column by using **summary()**, which tells us various statistics depending on the type of the column
+
+```{r}
+summary(salespeople)
+```
+
+Note that there are missing data in this dataframe**(NAs)**, in the summary.
+
+missing data denoted as **NA**
+
+The function **is.na()** look at all values in a vector or dataframe and return TRUE or FALSE based on whether they are NA or not. 
+
+By adding sum() function, counts NA as 1 and false as 0 which provides counts of missing data in dataframe
+
+```{r}
+is.na(salespeople$sales)
+is.na(salespeople)
+sum(is.na(salespeople))
+```
+
+This is a small number of NAs given the dimensions of our data set and we might want to remove the rows of data that contain NAs. The easiest way is to use the complete.cases() function, which identifies the rows that have no NAs, and then we can select those rows from the dataframe based on that condition. Note that you can overwrite objects with the same name in R.
+
+complete.cases identify rows without NAs
+```{r}
+salespeople <- salespeople[complete.cases(salespeople),] #override the content of the first object with missing values
+complete.cases(salespeople)
+sum(is.na(salespeople)) #confirm no NAs
+salespeople[complete.cases(salespeople),] #only the complete cases
+```
+
+**unique()** function see unique values in a vector or column
+
+extract different values -- unique(salespeople$performance)
+```{r}
+unique(salespeople$performance)
+```
+
+If we need to change the type of a column in a dataframe, we can use the **as.numeric()**, **as.character()**, **as.logical()** or **as.factor()** functions.
+
+```{r}
+as.factor(salespeople$performance) #produce factor
+salespeople$performance <- as.factor(salespeople$performance) #override salespeople as factor
+str(salespeople)
+```
+
+# Manipulating data frames
+
+Dataframes can be subsetted to contain only rows that satisfy specific conditions.
+```{r}
+(sales_720 <- subset(salespeople, subset = sales == 720))
+```
+## Inequality
+
+Note the use of **==**, which is used in many programming languages, to test for precise equality. Similarly we can select columns based on inequalities (> for ‘greater than’‍, < for ‘less than’‍, >= for ‘greater than or equal to’‍, <= for ‘less than or equal to’‍, or != for ‘not equal to’).
+
+```{r}
+#select all rows that the value is greather than or equal to 700 show the first 6 rows
+#exclude rows that has 720
+high_sales <- subset(salespeople, subset = sales >= 700)
+subset(salespeople, subset = sales != 700)
+head(high_sales)
+```
+
+
+select specific columns using **select** argument
+```{r}
+salespeople_sales_perf <- subset(salespeople, select = c("sales", "performance"))
+head(salespeople_sales_perf)
+```
+
+two dataframes with the same name can be combined by their rows
+
+```{r}
+low_sales <- subset(salespeople, subset = sales < 400)
+#bind the rows of low_sales and high_sales together
+low_and_high_sales = rbind(low_sales, high_sales) #combined low and high sales together
+head(low_and_high_sales)
+```
+
+Two dataframes with different column names can be combined by their columns.
+```{r}
+#two dataframes with columns each
+sales_perf <- subset(salespeople, select = c("sales", "performance"))
+prom_custrate <- subset(salespeople, select = c("promoted", "customer_rate"))
+#bind the columns to create a dataframe with four columns
+full_df <- cbind(sales_perf, prom_custrate)
+head(full_df)
+```
+
+cbind makes data apad
+
+rbind is below
+
+## Functions and 
+
+head()
+
+subset()
+
+rbind()
+- combine row wise
+
+exist to perform common operations
+
+**Functions** - usually take one or more arguments
+the function **head()**, which displays the first rows of a dataframe4, has only one required argument **x**: the name of the dataframe. A second argument is optional, **n**: the number of rows to display. If n is not entered, it is assumed to have the **default value n = 6**.
+
+If you enter arguments without naming them, R expects the arguments to be entered in exactly the right order.
+
+```{r}
+head(full_df, n=10)
+```
+
+```{r}
+?head
+head(x = full_df, n = 10)
+head(full_df, n = 10)
+```
+
+```{r}
+#see the head of salespeople, with the default of 6 rows
+head(salespeople)
+# see fewer rows - arguments need to be in the right order if not named
+head(salespeople,3) #3 is used to override the default value 6
+```
+
+```{r}
+#if you don't know the right order of the name your arguments and you can put them in any order
+head(n = 3, x = salespeople)
+```
+
+# Help Functions
+```{r}
+# To get help on the head() function
+help(head)
+?head
+```
+
+open help browser and do the search there
+
+help:
+examples
+required and optional arguments
+data type of input and output
+
+## Writing yopur own functions
+Functions are not limited to those that come packaged in R. Users can write their own functions to perform tasks that are helpful to their objectives. Experienced programmers in most languages subscribe to a principle called DRY (Don’t Repeat Yourself). Whenever a task needs to be done repeatedly, it is poor practice to write the same code numerous times. It makes more sense to write a function to do the task.
+
+write the same code numerous times for practice
+
+generates  a report on a Dataframe
+```{r}
+#create df_report function
+df_report <- function(df) {
+  paste("This dataframe contains", nrow(df),
+  "rows and", ncol(df), 
+  "columns. There are", sum(is.na(df)), 
+  "NA entries"
+  )
+}
+```
+
+```{r}
+df_report(salespeople)
+df_report(sales_720)
+df_report(low_and_high_sales)
+#df_report(salespeople_local) (?)
+```
+
+
+
+in this example, a simple function is written which generates a report on dataframe
+```{r}
+df_report <- function(df) {
+  paste(
+    "This dataframe contains", nrow(df),
+    "rows and", ncol(df),
+    "columns. There are", sum(is.na(df)),
+    "NA entries."
+  )
+}
+````
+
+#INSTALLING PACKAGES
+
+a popular package used for statistical modeling is the **MASS** package
+
+To install MASS:
+install.packages("MASS")
+- This will send R to the main internet repository for R packages (known as CRAN). It will find the right version of MASS for your operating system and download and install it into your package library. If MASS needs other packages in order to work, it will also install these packages(dependencies).
+
+```{r}
+install.packages("MASS")
+```
+needs internet access
+
+if nadelete tanan packages in r you can use this:
+```{r}
+#If you want to install more than one package, put the names of the packages inside a character vector
+my_packages <- c("MASS, "DescTools", "dplyr") 
+#can be used dependently(?)
+```
+
+
+HELP function 
+```{r}
+help(package="MASS")
+```
+
+# USING PACKAGES
+load the package, library command
+to have accesss on the functions
+```{r}
+library(MASS)
+```
+ Note that whenever you see the library() command in this book, it is assumed that you have already installed the package in that command. If you have not, the library() command will fail.
+ 
+functions BELONG to packages
+
+Problems can occur when you load packages that contain functions with the same name as functions that already exist in your R session. Often the messages you see when loading a package will alert you to this. When R is faced with a situation where a function exists in multiple packages you have loaded, R always defaults to the function in the **most recently loaded package**. This may not always be what you intended.
+
+To avoid this, namespace your functions
+
+To namespace, use:
+
+package::function()so to safely call stepAIC() from MASS, you use MASS::stepAIC()
+
+# THE PIPE OPERATOR
+- makes code more natural to read and write and reduces the typical computing problem of many nested operations inside parentheses
+- comes inside many R packages particularly *magrittr* and *dplyr*
+
+EX.
+1. subset salespeople to only the sales values of those with sales less than 500
+2. take the mean of those values
+```{r}
+sales <- subset(salespeople$sales, subset = salespeople$sales < 500)
+mean(subset(salespeople$sales, subset = salespeople$sales < 500))
+```
+
+The pipe operator **%>%** takes the command that comes before it and places it inside the function that follows it (by default as the first argument).
+
+```{r}
+library(magrittr)
+subset(salespeople$sales, subset = salespeople$sales < 500) %>% mean()
+```
+
+This can be extended to perform arbitrarily many operations in one piped command.
+```{r}
+#based on pipe intax
+salespeople$sales %>% #start with all the data
+  subset(subset = salespeople$sales < 500) %>%
+  # get the subsetted data
+  mean() %>% # take the mean value
+  round() # round to the nearest integer
+#based on r intax
+round(mean(subset(salespeople$sales, subset = salespeople$sales < 500)))
+```
+  
+  pipe operator is unique to R, and very widely used, makes code more readable, reduces complexity, helps orient around a common ‘grammar’ for the manipulation of data.
+  
+The pipe operator helps you structure your code more clearly around nouns (objects), verbs (functions) and adverbs (arguments of functions). One of the most developed sets of packages in R that follows these principles is the tidyverse family of packages, which I encourage you to explore.
+
+# ERORS WARNINGS AND MESSAGES IN R
+  
+  **Errors** are serious problems which usually result in the halting of your code and a failure to return your requested output.
+  
+```{r}
+  # easy to understand error
+  subset(salespeople, subset = sales = 720)
+  #correct
+  subset(salespeople, subset = sales == 720)
+```
+  
+```{r}
+# challenging error
+  head[salespeople]
+# correct
+head(salespeople)
+```
+  
+ consult for error *stack overflow(https://stackoverflow.com.)*  improve doing R (should try)
+  
+**Warnings** less serious than error 
+  in many cases could ignore warnings but sometimes they are an important reminder to go back and edit your code.
+  
+**Messages** - pieces of information that may or may not be useful to you at a particular point in time.
+  
+# PLOTTING AND GRAPHING
