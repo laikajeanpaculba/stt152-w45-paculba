@@ -356,3 +356,23 @@ round(mean(subset(salespeople$sales, subset = salespeople$sales < 500)))
 ```
   
   pipe operator widely used in r
+
+ERORS WARNINGS AND MESSAGES IN R
+  
+  ```{r}
+  subset(salespeople, subset = sales = 720)
+  #correct
+  subset(salespeople, subset = sales == 720)
+  ```
+  
+  ```{r}
+  head[salespeople]
+  ```
+  
+  stack overflow improve doing R (should try)
+  
+  Warnings less serious than error 
+  in many cases could ignore warnings
+  messages - pieces of information that 
+  
+  PLOTTING AND GRAPHING
