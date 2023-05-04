@@ -24,8 +24,8 @@ my_sum + 3
 
 -   can be signified by adding an **'L'** to the end
 ```{r}
-my_integer \<- 1L
-my_double \<- 6.38
+my_integer <- 1L
+my_double <- 6.38
 ```
 ## typeof() function
 
@@ -90,7 +90,7 @@ typeof(my_logical) => *verify if its indeed logical*
 ```{r}
 my_double_vector <- c(2.3, 6.8, 4.5, 65, 6)  
 str(my_double_vector) #verify
-type of(my_double_vector)
+typeof(my_double_vector)
 ```
 
 ## CATEGORICAL DATA
@@ -124,16 +124,18 @@ If needed factors can be given order
 
 **contents and type of the vector which is ordered type:**
 ```{r}
-    ((ranking <- c("Medium", "High", "Low"))
-    ranking_order <- order(ranking, levels(c("Medium", "High", "Low")))
-    ranking_order <- order(ranking, levels(c("Medium", "High", "Low")))
-    str(ranking_order)
+ranking <- c("Medium", "Low", "High")
+ranking_factors <- order(ranking, levels=c("Low", "Medium", "High"))
+str(ranking_factors)
+ranking_factors <- ordered(ranking, levels=c("Low", "Medium", "High"))
+str(ranking_factors)
+ranking_factors
 ```
 
 length() function, the number of elements in a vector can be seen using this
-```{r}
+
 link(categories)
-```
+
 
 ## COERCION
 - result of poor design 
@@ -152,13 +154,13 @@ If you try to mix data types inside a vector, it will usually result in type coe
 
 ```{r}
 # numeric sequence vector
-vec \<- 1:5 
+vec <- 1:5 
 str(vec)
 ```
 
  
 ```{r}
-create a new vector containing vec and the character hello
+#create a new vector containing vec and the character hello
 new_vec <- c(vec, "hello")   #creates a vector forom the precious vector
 # numeric values have been coerced into their character equivalents
 str(new_vec) # the new elements become a type elements 
@@ -166,7 +168,6 @@ str(new_vec) # the new elements become a type elements
 
 ```{r}
 vec[1]+ vec[2] # result is 3
-new_vec[1] + new_vec[2] 
 ```
 
 - result to error 
@@ -183,7 +184,6 @@ str(mix)
 ```{r}
 # try to add a numeric to our previous categories factor vector
 new_categories <- c(categories, 1)
-
 # categories have been coerced to background integer representations
 str(new_categories)
 ```
@@ -229,7 +229,6 @@ new_list <- list(
   vector = c("Hello", "Goodbye"), 
   matrix = matrix(1:4, nrow = 2, ncol = 2)
 )
-
 str(new_list)
 ```
 
@@ -268,9 +267,9 @@ Dataframe most commonly used data structure by data analyst in R, due to its sim
 
 to work with data in R, usually need to pull it in from an outside source into a dataframe
 
-```{r}
+
 R data sets
-```
+
 
 R facilitates numerous ways of importing, databases from simple .csv files
 
@@ -279,7 +278,6 @@ The read.csv() function can accept a URL address of the file if it is online
 ```{r}
 # url of data set 
 url <- "http://peopleanalytics-regression-book.org/data/salespeople.csv"
-
 # load the data set and store it as a dataframe called salespeople
 salespeople <- read.csv(url)
 View(salespeople)
@@ -505,7 +503,7 @@ df_report <- function(df) {
 }
 ````
 
-#INSTALLING PACKAGES
+## INSTALLING PACKAGES
 
 a popular package used for statistical modeling is the **MASS** package
 
@@ -524,14 +522,11 @@ if nadelete tanan packages in r you can use this:
 my_packages <- c("MASS, "DescTools", "dplyr") 
 #can be used dependently(?)
 ```
-
-
 HELP function 
 ```{r}
 help(package="MASS")
 ```
-
-# USING PACKAGES
+## USING PACKAGES
 load the package, library command
 to have accesss on the functions
 ```{r}
@@ -549,10 +544,9 @@ To namespace, use:
 
 package::function()so to safely call stepAIC() from MASS, you use MASS::stepAIC()
 
-# THE PIPE OPERATOR
+## THE PIPE OPERATOR
 - makes code more natural to read and write and reduces the typical computing problem of many nested operations inside parentheses
 - comes inside many R packages particularly *magrittr* and *dplyr*
-
 EX.
 1. subset salespeople to only the sales values of those with sales less than 500
 2. take the mean of those values
@@ -560,14 +554,11 @@ EX.
 sales <- subset(salespeople$sales, subset = salespeople$sales < 500)
 mean(subset(salespeople$sales, subset = salespeople$sales < 500))
 ```
-
 The pipe operator **%>%** takes the command that comes before it and places it inside the function that follows it (by default as the first argument).
-
 ```{r}
 library(magrittr)
 subset(salespeople$sales, subset = salespeople$sales < 500) %>% mean()
 ```
-
 This can be extended to perform arbitrarily many operations in one piped command.
 ```{r}
 #based on pipe intax
@@ -583,7 +574,6 @@ round(mean(subset(salespeople$sales, subset = salespeople$sales < 500)))
   pipe operator is unique to R, and very widely used, makes code more readable, reduces complexity, helps orient around a common ‘grammar’ for the manipulation of data.
   
 The pipe operator helps you structure your code more clearly around nouns (objects), verbs (functions) and adverbs (arguments of functions). One of the most developed sets of packages in R that follows these principles is the tidyverse family of packages, which I encourage you to explore.
-
 # ERORS WARNINGS AND MESSAGES IN R
   
   **Errors** are serious problems which usually result in the halting of your code and a failure to return your requested output.
