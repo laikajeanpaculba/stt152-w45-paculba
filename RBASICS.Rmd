@@ -600,3 +600,49 @@ head(salespeople)
 **Messages** - pieces of information that may or may not be useful to you at a particular point in time.
   
 # PLOTTING AND GRAPHING
+
+```{r}
+#scatter plot of cusstomer_rate against sales
+plot(x = salespeople$sales,
+     y = salespeople$customer_rate)
+```
+
+```{r}
+#scatter plot of cusstomer_rate against sales
+plot(x = salespeople$sales,
+     y = salespeople$customer_rate,
+     xlab = "Sales", ylab = "Customer Rate",  main =  "Scatterplot")
+```
+
+hist() for histogram
+
+```{r}
+salespeople$performance <- as.numeric(salespeople$performance)
+hist(salespeople$performance)
+hist(salespeople$performance, breaks = 0:4,
+     xlab = "Performance Rating", 
+     main = "Histogram of Performance Ratings")
+```
+
+box and whisker
+
+```{r}
+boxplot(formula = sales ~ performance, 
+        data = salespeople,
+        xlab = "Performance Rating", 
+        ylab = "Sales ($m)",
+        main = "Boxplot of Sales by Performance Rating")
+```
+
+## specialist plotting and 
+
+interactive graphing
+
+GGally extends 
+```{r}
+# convert performance and promotion to categorical
+salespeople$promoted <- as.factor(salespeople$promoted)
+salespeople$performance <- as.factor(salespeople$performance)
+# pairplot of salespeople
+GGally::ggpairs(salespeople)
+```
