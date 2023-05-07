@@ -8,9 +8,9 @@ output: pdf_document
 R is a programming language that was originally developed by and for statisticians, but in recent years its capabilities and the environments in which it is used have expanded greatly, with extensive use nowadays in academia and the public and private sectors.
 r receives input and output. not easy to use without an IDE 
 
-**\<-** operator to store an object
+**<-**  operator to store an object
 
-**\#**-can be used to put a comment
+**#**  can be used to put a comment
 
 
 ```{r}
@@ -298,6 +298,7 @@ head(salespeople)
 ```
 
 
+
 ```{r}
 # view a specific view by using $ sign and use square brackets to view a specific entry
 salespeople$sales
@@ -373,7 +374,7 @@ Dataframes can be subsetted to contain only rows that satisfy specific condition
 ```
 ## Inequality
 
-Note the use of **==**, which is used in many programming languages, to test for precise equality. Similarly we can select columns based on inequalities (> for ‘greater than’‍, < for ‘less than’‍, >= for ‘greater than or equal to’‍, <= for ‘less than or equal to’‍, or != for ‘not equal to’).
+Note the use of **==**, which is used in many programming languages, to test for precise equality. Similarly we can select columns based on inequalities ( for greater than, < for less than, >= for greater than or equal to, <= for less than or equal to, or != for not equal to).
 
 ```{r}
 #select all rows that the value is greather than or equal to 700 show the first 6 rows
@@ -492,6 +493,7 @@ df_report(low_and_high_sales)
 
 
 in this example, a simple function is written which generates a report on dataframe
+
 ```{r}
 df_report <- function(df) {
   paste(
@@ -501,7 +503,8 @@ df_report <- function(df) {
     "NA entries."
   )
 }
-````
+```
+
 
 ## INSTALLING PACKAGES
 
@@ -511,9 +514,10 @@ To install MASS:
 install.packages("MASS")
 - This will send R to the main internet repository for R packages (known as CRAN). It will find the right version of MASS for your operating system and download and install it into your package library. If MASS needs other packages in order to work, it will also install these packages(dependencies).
 
-```{r}
+to install: 
+
 install.packages("MASS")
-```
+
 needs internet access
 
 if nadelete tanan packages in r you can use this:
@@ -543,6 +547,7 @@ To avoid this, namespace your functions
 To namespace, use:
 
 package::function()so to safely call stepAIC() from MASS, you use MASS::stepAIC()
+  
 
 ## THE PIPE OPERATOR
 - makes code more natural to read and write and reduces the typical computing problem of many nested operations inside parentheses
@@ -592,7 +597,7 @@ The pipe operator helps you structure your code more clearly around nouns (objec
 head(salespeople)
 ```
   
- consult for error *stack overflow(https://stackoverflow.com.)*  improve doing R (should try)
+ consult for error **stack overflow(https://stackoverflow.com.)**  improve doing R (should try)
   
 **Warnings** less serious than error 
   in many cases could ignore warnings but sometimes they are an important reminder to go back and edit your code.
@@ -601,30 +606,41 @@ head(salespeople)
   
 # PLOTTING AND GRAPHING
 
+**plot()** performs basic x-y plotting
+
+usage of arguments for customizing the axis labels and title for the plot:
+main, xlab and ylab
+
 ```{r}
-#scatter plot of cusstomer_rate against sales
+#scatter plot of customer_rate against sales
 plot(x = salespeople$sales,
      y = salespeople$customer_rate)
 ```
 
 ```{r}
-#scatter plot of cusstomer_rate against sales
+#scatter plot of customer_rate against sales
 plot(x = salespeople$sales,
      y = salespeople$customer_rate,
      xlab = "Sales", ylab = "Customer Rate",  main =  "Scatterplot")
 ```
 
-hist() for histogram
+**hist()** for histogram
+**breaks** customize how the bars appear
 
 ```{r}
+# convert performance ratings back to numeric data type for histogram
 salespeople$performance <- as.numeric(salespeople$performance)
+# histogram of performance ratings
 hist(salespeople$performance)
 hist(salespeople$performance, breaks = 0:4,
      xlab = "Performance Rating", 
      main = "Histogram of Performance Ratings")
 ```
 
-box and whisker
+Box and whisker plots are excellent ways to see the distribution of a variable.
+
+Note the use of the **formula** and **data** notation here to define the variable we are interested in and how we want it grouped.
+
 
 ```{r}
 boxplot(formula = sales ~ performance, 
@@ -634,11 +650,17 @@ boxplot(formula = sales ~ performance,
         main = "Boxplot of Sales by Performance Rating")
 ```
 
-## specialist plotting and 
+## specialist plotting and graphing packages
 
+**ggplot**, **ggplot2** allows the flexible construction of a very wide range of charts and graphs, but uses a very specific command grammar which can take some getting used to.
 interactive graphing
 
-GGally extends 
+The **plotly** package  is an excellent package for interactive graphing and is used for 3D illustrations.
+
+**GGally** is a package that extends **ggplot2** to allow easy combination of charts and graphs.
+
+One of its most popular functions is **ggpairs()**, which produces a pairplot.A pairplot is a visualization of all univariate and bivariate patterns in a data set, with univariate distributions in the diagonal and bivariate relationships or correlations displayed in the off-diagonal. 
+
 ```{r}
 # convert performance and promotion to categorical
 salespeople$promoted <- as.factor(salespeople$promoted)
@@ -646,3 +668,4 @@ salespeople$performance <- as.factor(salespeople$performance)
 # pairplot of salespeople
 GGally::ggpairs(salespeople)
 ```
+
