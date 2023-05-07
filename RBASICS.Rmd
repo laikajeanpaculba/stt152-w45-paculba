@@ -522,9 +522,10 @@ needs internet access
 
 if nadelete tanan packages in r you can use this:
 ```{r}
-#If you want to install more than one package, put the names of the packages inside a character vector
-my_packages <- c("MASS, "DescTools", "dplyr") 
-#can be used dependently(?)
+# If you want to install more than one package, put the names of the packages inside a character vector
+my_packages <- c("MASS", "DescTools", "dplyr")
+# can be used dependently(?)
+#install.packages(my_packages)
 ```
 HELP function 
 ```{r}
@@ -584,15 +585,15 @@ The pipe operator helps you structure your code more clearly around nouns (objec
   **Errors** are serious problems which usually result in the halting of your code and a failure to return your requested output.
   
 ```{r}
-  # easy to understand error
-  subset(salespeople, subset = sales = 720)
-  #correct
-  subset(salespeople, subset = sales == 720)
+# easy to understand error
+# subset(salespeople, subset = sales = 720) example of an error
+#correct
+subset(salespeople, subset = sales == 720)
 ```
   
 ```{r}
 # challenging error
-  head[salespeople]
+# head[salespeople] this is an example of an error
 # correct
 head(salespeople)
 ```
