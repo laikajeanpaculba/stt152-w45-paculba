@@ -5,19 +5,27 @@ date: "March 15, 2023"
 output: pdf_document
 ---
 
-R is a programming language that was originally developed by and for statisticians, but in recent years its capabilities and the environments in which it is used have expanded greatly, with extensive use nowadays in academia and the public and private sectors.
-r receives input and output. not easy to use without an IDE 
+**R** is a programming language that was originally developed by and for statisticians, but in recent years its capabilities and the environments in which it is used have expanded greatly, with extensive use nowadays in academia and the public and private sectors.
+**R** -receives input and output
+ -not easy to use without an IDE 
 
 **<-**  operator to store an object
 
 **#**  can be used to put a comment
 
+**print()**  
 
 ```{r}
 my_sum <- 3 + 3 #storing the result
 my_sum + 3 
 ```
 
+```{r}
+# show me the value of my_sum
+my_sum
+# assign my_sum + 3 to new_sum and show its value
+(new_sum <- my_sum + 3)
+```
 
 
 ## INTEGERS
@@ -27,7 +35,7 @@ my_sum + 3
 my_integer <- 1L
 my_double <- 6.38
 ```
-## typeof() function
+**typeof()** function
 
 -   used to see the type of a single scalar value
 ```{r}
@@ -68,11 +76,10 @@ typeof(my_double)
 
 ```{r}
     my_logical <- TRUE
-    typeof(my_logical)  
+    typeof(my_logical)  # to verify if its indeed logical
     my_logical <- TRUE
     typeof(TRUE)
 ```
-typeof(my_logical) => *verify if its indeed logical*
 
 
 # HOMOGENOUS DATA STRUCTURES
@@ -80,7 +87,7 @@ typeof(my_logical) => *verify if its indeed logical*
 ## VECTORS
 
 -   one-dimensional structures containing data of the same type and are
-    notated by using c().
+    notated by using **c()**.
 
  + **typeof()** - a function used to view the type of vector
 
@@ -99,7 +106,7 @@ typeof(my_double_vector)
 -   can be stored as a factor vector to make it easier to perform
     grouping and manipulation.
 
-define a vector of the factor which is not
+Define a vector of the factor which is not
 ```{r}
     categories <- factor(c("A", "B", "V", "A", "C")) 
     str(categories) # verify
@@ -133,8 +140,9 @@ ranking_factors
 ```
 
 length() function, the number of elements in a vector can be seen using this
-
-link(categories)
+```{r}
+length(categories)
+```
 
 
 ## COERCION
@@ -345,7 +353,8 @@ This is a small number of NAs given the dimensions of our data set and we might 
 
 complete.cases identify rows without NAs
 ```{r}
-salespeople <- salespeople[complete.cases(salespeople),] #override the content of the first object with missing values
+salespeople <- salespeople[complete.cases(salespeople),] #override the content 
+# of the first object with missing values
 complete.cases(salespeople)
 sum(is.na(salespeople)) #confirm no NAs
 salespeople[complete.cases(salespeople),] #only the complete cases
@@ -414,7 +423,7 @@ cbind makes data apad
 
 rbind is below
 
-## Functions and 
+## Functions, packages and libraries
 
 head()
 
@@ -466,12 +475,12 @@ examples
 required and optional arguments
 data type of input and output
 
-## Writing yopur own functions
+## Writing your own functions
 Functions are not limited to those that come packaged in R. Users can write their own functions to perform tasks that are helpful to their objectives. Experienced programmers in most languages subscribe to a principle called DRY (Don’t Repeat Yourself). Whenever a task needs to be done repeatedly, it is poor practice to write the same code numerous times. It makes more sense to write a function to do the task.
 
-write the same code numerous times for practice
+*write the same code numerous times for practice*
 
-generates  a report on a Dataframe
+Generates  a report on a Dataframe
 ```{r}
 #create df_report function
 df_report <- function(df) {
@@ -518,7 +527,7 @@ to install:
 
 install.packages("MASS")
 
-needs internet access
+*needs internet access*
 
 if nadelete tanan packages in r you can use this:
 ```{r}
@@ -537,9 +546,9 @@ to have accesss on the functions
 ```{r}
 library(MASS)
 ```
- Note that whenever you see the library() command in this book, it is assumed that you have already installed the package in that command. If you have not, the library() command will fail.
+ Note that whenever you see the **library()** command in this book, it is assumed that you have already installed the package in that command. If you have not, the library() command will fail.
  
-functions BELONG to packages
+*functions BELONG to packages*
 
 Problems can occur when you load packages that contain functions with the same name as functions that already exist in your R session. Often the messages you see when loading a package will alert you to this. When R is faced with a situation where a function exists in multiple packages you have loaded, R always defaults to the function in the **most recently loaded package**. This may not always be what you intended.
 
