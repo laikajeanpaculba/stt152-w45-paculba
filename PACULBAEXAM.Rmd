@@ -1,0 +1,372 @@
+---
+title: "LABORATORY EXAM"
+author: "Paculba, Laika Jean B."
+date: "2023-06-29"
+output: 
+  pdf_document: 
+  lineheight: 5
+  fontsize: 8
+---
+
+# 1 The Fractional Distillation Data
+
+The purity of oxygen produced by a fractional distillation process is thought to be related
+to the percentage of hydrocarbons in the main condensor of the processing unit. Twenty
+samples are shown below.
+
+```{r}
+library(pander)
+
+data1 <- data.frame(
+  observations = 1:20,
+  Purity = c(86.91, 89.85, 90.28, 86.34, 92.58, 87.33, 86.29, 91.86, 95.61, 89.86, 96.73, 99.42, 98.66, 96.07, 93.65, 87.31, 95.00, 96.85, 85.20, 90.56),
+  Hydrocarbon = c(1.02, 1.11, 1.43, 1.11, 1.01, 0.95, 1.11, 0.87, 1.43, 1.02, 1.46, 1.55, 1.55, 1.55, 1.40, 1.15, 1.01, 0.99, 0.95, 0.98),
+  stringsAsFactors = FALSE
+)
+data1$Hydrocarbon <- sprintf("%.2f", data1$Hydrocarbon)
+data1$Purity <- sprintf("%.2f", data1$Purity)
+
+pander::pander(data1)
+```
+
+
+###a. Create a scatter diagram for the data.
+
+```{r}
+library(ggplot2)
+
+data1 <- data.frame(
+  observations = 1:20,
+  Purity = c(86.91, 89.85, 90.28, 86.34, 92.58, 87.33, 86.29, 91.86, 95.61, 89.86, 96.73, 99.42, 98.66, 96.07, 93.65, 87.31, 95.00, 96.85, 85.20, 90.56),
+  Hydrocarbon = c(1.02, 1.11, 1.43, 1.11, 1.01, 0.95, 1.11, 0.87, 1.43, 1.02, 1.46, 1.55, 1.55, 1.55, 1.40, 1.15, 1.01, 0.99, 0.95, 0.98))
+
+Purity = c(86.91, 89.85, 90.28, 86.34, 92.58, 87.33, 86.29, 91.86, 95.61, 89.86, 96.73, 99.42, 98.66, 96.07, 93.65, 87.31, 95.00, 96.85, 85.20, 90.56)
+Hydrocarbon = c(1.02, 1.11, 1.43, 1.11, 1.01, 0.95, 1.11, 0.87, 1.43, 1.02, 1.46, 1.55, 1.55, 1.55, 1.40, 1.15, 1.01, 0.99, 0.95, 0.98)
+  
+ggplot(data = NULL, aes(x = Hydrocarbon, y= Purity)) + 
+  geom_point() + geom_smooth(method = "lm", se = FALSE, color = "pink") + 
+  labs(title = "Scatter Diagram of The Fractional Distillation Data",  x = "HYDROCARBON", y = "PURITY")
+
+```
+###b. The least-squares fit is .
+
+```{r}
+model <- lm(data = data1,
+formula = Purity ~ Hydrocarbon)
+names(model)
+```
+```{r}
+model$coefficients
+```
+```{r}
+model_summary <- summary(model)
+model_summary$sigma
+```
+
+```{r}
+# Therefore, the least square fit is y_hat = 77.46239 + (12.02816)x 
+# view the fitted values
+fitted.values <- fitted(model)
+fitted.values
+```
+
+###c. The estimate of $\sigma^2$is.
+
+```{r}
+sigma_hat_squared <- ((model_summary$sigma)^2)
+print(paste("Therefore the estimate of sigma squared is: ", sigma_hat_squared))
+```
+
+
+###d. Test for significance of regression in the regression model.
+```{r, message=FALSE, fig.align='center', fig.height=3, fig.width=5}
+library(mosaic)
+model_summary$coefficients["Hydrocarbon",]
+mosaic::xqt(0.975, 18)
+```
+
+###e. Use an analysis-of-variance approach to test significance of regression.
+Null Hypothesis: $H_0$: $\beta_1 = 0$
+Alternative Hypothesis: $H_1$: $\beta_1 != 0$ 
+```{r}
+t_value <- model_summary$coefficients["Hydrocarbon","t value"]
+print(t_value)
+```
+```{r}
+# Find the critical value
+df <- 20
+significance_level <- 0.05
+critical_value <- qt(1-significance_level/2, df-2)
+print(paste("The critical value is:", critical_value))
+```
+When $\alpha=0.05$, the critical value of t is $t_{0.025, 18} = 2.101$ and the T Value is 3.39
+
+Since |t value| > critical value
+
+Thus, we would reject $H_0: beta_1 = 0$.
+
+Hence, there is a linear relationship between shear strength and the age of the propellant.
+```{r}
+model_summary
+```
+
+
+
+```{r, fig.align='center', fig.width=5, fig.height=3}
+model_summary$fstatistic
+mosaic::xqf(0.99,1,18)
+```
+```{r}
+anova_result <- anova(model)
+print(anova_result)
+```
+Extracting the F value
+```{r}
+f_value <- anova_result$'F value'[1]
+print(f_value)
+```
+Finding the critical values
+```{r}
+# Find the critical value
+df1 <- 1
+df2 <- 20
+significance_level <- 0.05
+critical_fvalue <- qf(1-significance_level, df1, df2-2)
+print(paste("The Critical F value is:", critical_fvalue))
+```
+
+```{r}
+result <- t.test(Hydrocarbon, Purity)
+p_value <- result$p.value
+print(p_value)
+```
+The P value for this test is 0.003.
+
+Using F test in testing the analysis of variance and choosing the significance level $\alpha=0.05$, the critical value of f is computed as $f_{0.05,1,18} = 4.41$
+
+The F value is 11.4658 and the critical F value is 4.41. Since the F value is greater than the critical value, Hence, we reject the null hypothesis.
+
+Therefore, there is a linear relationship between shear strength and the age of the propellant.
+
+###f. Find a 95%CI on the slope.
+
+```{r}
+# Find a 95%CI on the slope
+# Input data
+y <- c(86.91, 89.85, 90.28, 86.34, 92.58, 87.33, 86.29, 91.86, 95.61, 89.86,
+96.73, 99.42, 98.66, 96.07, 93.65, 87.31, 95.00, 96.85, 85.20, 90.56)
+x <- c(1.02, 1.11, 1.43, 1.11, 1.01, 0.95, 1.11, 0.87, 1.43, 1.02,1.46, 1.55,
+1.55, 1.55, 1.40, 1.15, 1.01, 0.99, 0.95, 0.98)
+# Perform linear regression
+model <- lm(y ~ x)
+# Calculate 95% confidence interval
+conf_interval <- confint(model, level = 0.95)
+# Display the confidence interval
+conf_interval
+```
+
+
+###g. Find a 95%CI on the mean purity when the hydrocarbon percentage is 1.00.
+
+```{r}
+# Find a 95%CI on the mean y when x percentage is 1.00.
+# Input data
+y <- c(86.91, 89.85, 90.28, 86.34, 92.58, 87.33, 86.29, 91.86, 95.61, 89.86,
+96.73, 99.42, 98.66, 96.07, 93.65, 87.31, 95.00, 96.85, 85.20, 90.56)
+x <- c(1.02, 1.11, 1.43, 1.11, 1.01, 0.95, 1.11, 0.87, 1.43, 1.02,1.46, 1.55,
+1.55, 1.55, 1.40, 1.15, 1.01, 0.99, 0.95, 0.98)
+# Perform linear regression
+model <- lm(y ~ x)
+# Set the x value for prediction
+
+3
+
+x_pred <- 1.00
+# Predict the mean y for x_pred
+y_pred <- predict(model, newdata = data.frame(x = x_pred), interval = "confidence", level = 0.95)
+# Display the confidence interval
+y_ci <- y_pred[, c("lwr", "upr")]
+y_ci
+```
+
+
+# 2. The Steam Consumption Data
+The number of pounds of steam used per month at a plant is thought to be related to the
+average monthly ambient temperature. The past year’s usages and temperatures follow.
+
+
+
+
+```{r}
+library(pander)
+
+data2 <- data.frame(
+  observations = 1:12,
+  Usage = c(185.79, 214.47, 288.03, 424.84, 454.68, 539.03, 621.55, 675.06, 562.03, 452.93, 369.95, 273.98),
+  Temperature = c(21, 24, 32, 47, 50, 59, 68, 74, 62, 50, 41, 30),
+  stringsAsFactors = FALSE
+)
+data2$Temperature <- sprintf("%.2f", data2$Temperature)
+data2$Usage <- sprintf("%.2f", data2$Usage)
+
+pander::pander(data2)
+
+```
+
+###a. Create a scatter diagram for the data.
+
+```{r}
+library(ggplot2)
+
+data2 <- data.frame(
+  observations = 1:12,
+  Usage = c(185.79, 214.47, 288.03, 424.84, 454.68, 539.03, 621.55, 675.06, 562.03, 452.93, 369.95, 273.98),
+  Temperature = c(21, 24, 32, 47, 50, 59, 68, 74, 62, 50, 41, 30))
+
+Usage = c(185.79, 214.47, 288.03, 424.84, 454.68, 539.03, 621.55, 675.06, 562.03, 452.93, 369.95, 273.98)
+Temperature = c(21, 24, 32, 47, 50, 59, 68, 74, 62, 50, 41, 30)
+  
+ggplot(data = NULL, aes(x = Temperature, y= Usage)) + 
+  geom_point() + geom_smooth(method = "lm", se = FALSE, color = "pink") + 
+  labs(title = "Scatter Diagram of The Fractional Distillation Data",  x = "TEMPERATURE", y = "USAGE")
+
+```
+
+###b. The least-squares fit is .
+```{r}
+model2 <- lm(data = data2,
+formula = Usage ~ Temperature)
+names(model2)
+```
+```{r}
+model2$coefficients
+```
+```{r}
+modelsummary <- summary(model2)
+modelsummary$sigma
+```
+
+```{r}
+modelsummary
+```
+
+
+```{r}
+# Therefore, the least square fit is y_hat = 77.46239 + (12.02816)x 
+# view the fitted values
+fitted.values2 <- fitted(model2)
+fitted.values2
+```
+
+###c. The estimate of $\sigma^2$
+
+```{r}
+sigma_hat_squared2 <- ((modelsummary$sigma)^2)
+print(paste("Therefore the estimate of sigma squared is: ", sigma_hat_squared2))
+```
+
+###d. Test for significance of regression in the regression model.
+```{r, message=FALSE, fig.align='center', fig.height=3, fig.width=5}
+library(mosaic)
+modelsummary$coefficients["Temperature",]
+mosaic::xqt(0.975, 18)
+```
+
+###e. Use an analysis-of-variance approach to test significance of regression.
+```{r}
+t_value2 <- modelsummary$coefficients["Temperature","t value"]
+print(t_value2)
+```
+
+```{r}
+# Find the critical value
+df <- 20
+significance_level <- 0.05
+critical_value <- qt(1-significance_level/2, df-2)
+print(paste("The critical value is:", critical_value))
+```
+When $\alpha=0.05$, the critical value of t is $t_{0.025, 18} = 2.101$ and the T Value is 272.255
+
+Since |t value| > critical value
+
+Thus, we would reject $H_0: beta_1 = 0$.
+
+Hence, there is a linear relationship between shear strength and the age of the propellant.
+```{r}
+modelsummary
+```
+
+
+
+```{r, fig.align='center', fig.width=5, fig.height=3}
+modelsummary$fstatistic
+mosaic::xqf(0.99,1,18)
+```
+```{r}
+anova_result2 <- anova(model2)
+print(anova_result2)
+```
+
+Extracting the F value
+```{r}
+f_value2 <- anova_result2$'F value'[1]
+print(f_value2)
+```
+
+Finding the critical values
+```{r}
+# Find the critical value
+df1 <- 1
+df2 <- 20
+significance_level2 <- 0.05
+critical_fvalue2 <- qf(1-significance_level, df1, df2-2)
+print(paste("The Critical F value is:", critical_fvalue2))
+```
+
+```{r}
+result <- t.test(Temperature, Usage)
+p_value2 <- result$p.value
+print(p_value2)
+```
+The P value for this test is 0.003.
+
+Using F test in testing the analysis of variance and choosing the significance level $\alpha=0.05$, the critical value of f is computed as $f_{0.05,1,18} = 4.41$
+
+The F value is 74122.78 and the critical F value is 4.41. Since the F value is greater than the critical value, Hence, we reject the null hypothesis.
+
+Therefore, there is a linear relationship between shear strength and the age of the propellant.
+
+###f. Find a 99%CI on the slope.
+```{r}
+# Find a 95%CI on the slope
+# Input data
+y2 <- c(185.79, 214.47, 288.03, 424.84, 454.68, 539.03, 621.55, 675.06, 562.03, 452.93, 369.95, 273.98)
+x2 <- c(21, 24, 32, 47, 50, 59, 68, 74, 62, 50, 41, 30)
+# Perform linear regression
+model2 <- lm(y2 ~ x2)
+# Calculate 95% confidence interval
+conf_interval2 <- confint(model2, level = 0.99)
+# Display the confidence interval
+conf_interval2
+```
+
+###g. Construct a 99% prediction interval on steam usage in a month with average ambient temperature of 58◦
+
+```{r, warning=FALSE}
+# Find a 95%CI on the mean y when x percentage is 1.00.
+# Input data
+y2 <- c(185.79, 214.47, 288.03, 424.84, 454.68, 539.03, 621.55, 675.06, 562.03, 452.93, 369.95, 273.98)
+x2 <- c(21, 24, 32, 47, 50, 59, 68, 74, 62, 50, 41, 30)
+# Perform linear regression
+model2 <- lm(y2 ~ x2)
+# Set the x value for prediction
+
+3
+
+x_pred2 <- 58
+# Predict the mean y for x_pred2
+y_pred2 <- predict(model2, newdata = data.frame(x = x_pred2), interval = "confidence", level = 0.99)
+# Display the confidence interval
+y_ci2 <- y_pred2[, c("lwr", "upr")]
+y_ci2
+```
